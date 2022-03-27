@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <string>
 #include <vector>
+#include <ctime>
 #include "autocompleter.h"
 
 using namespace std;
@@ -61,6 +62,9 @@ int main()
 
 	// Setup
 	vector<string> R;
+	clock_t t;
+
+	int start = clock();
 
 
 	// Test constructor and size()
@@ -82,12 +86,12 @@ int main()
 	animals.insert("giraffe", 978584);
 	test(animals.size() == 13);
 
-
+	//int start_insert = clock();
 	Autocompleter words;
 	test(words.size() == 0);
 
 	ifstream f;
-	f.open("words2.txt");
+	f.open("..\\words2.txt");
 	assert(f.is_open()); // If this fails, you're missing words2.txt
 	string line;
 	while (getline(f, line))
@@ -96,6 +100,11 @@ int main()
 			stoi(line.substr(line.find_last_of(" ")+1)));
 	}
 	f.close();
+	/*int end_insert = clock();
+	int ticks_insert = end_insert - start_insert;
+	int seconds_insert = ((float)ticks_insert) / CLOCKS_PER_SEC;
+	cout << "insertion completed In " << seconds_insert << " seconds" << endl;*/
+
 	test(words.size() == 293147);
 	
 
@@ -318,8 +327,10 @@ int main()
 		test(R[2] == "yellowpages");
 	}
 
-
-	cout << "Assignment complete." << endl;
+	int end = clock();
+	int ticks = end - start;
+	int seconds = ((float)ticks) / CLOCKS_PER_SEC;
+	cout << "Assignment complete. In " << seconds << " seconds" << endl;
 }
 
 
