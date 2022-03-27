@@ -44,7 +44,7 @@ void interactive_mode()
 		getline(cin, line);
 		words.completions(line, C);
 		for (string s : C)
-			cout << "    " << s << endl;
+			std::cout << "    " << s << endl;
 	}
 	exit(0);
 }
@@ -86,12 +86,12 @@ int main()
 	animals.insert("giraffe", 978584);
 	test(animals.size() == 13);
 
-	//int start_insert = clock();
+	int start_insert = clock();
 	Autocompleter words;
 	test(words.size() == 0);
 
 	ifstream f;
-	f.open("..\\words2.txt");
+	f.open("words2.txt");
 	assert(f.is_open()); // If this fails, you're missing words2.txt
 	string line;
 	while (getline(f, line))
@@ -100,10 +100,10 @@ int main()
 			stoi(line.substr(line.find_last_of(" ")+1)));
 	}
 	f.close();
-	/*int end_insert = clock();
+	int end_insert = clock();
 	int ticks_insert = end_insert - start_insert;
-	int seconds_insert = ((float)ticks_insert) / CLOCKS_PER_SEC;
-	cout << "insertion completed In " << seconds_insert << " seconds" << endl;*/
+	float seconds_insert = ((float)ticks_insert) / CLOCKS_PER_SEC;
+	std::cout << "insertion completed In " << seconds_insert << " seconds" << endl;
 
 	test(words.size() == 293147);
 	
@@ -120,10 +120,12 @@ int main()
 	animals.insert("bullfrog", 273571);
 	test(animals.size() == 17);
 
-
+	float s;
 	// Test insert() and size()
 	for (int i = 0; i < 100000; ++i)
 	{
+		if (i == 0)
+			s = clock();
 		// Test completions()
 		animals.completions("a", R);
 		test(R.size() == 3);
@@ -325,12 +327,20 @@ int main()
 		test(R[0] == "yellow");
 		test(R[1] == "yellowstone");
 		test(R[2] == "yellowpages");
+
+		if (i == 0)
+		{
+			float e = clock();
+			float t = e - s;
+			float ss = ((float)t) / CLOCKS_PER_SEC;
+			std::cout << "one lap of test completed in " << ss << " seconds" << endl;
+		}
 	}
 
 	int end = clock();
 	int ticks = end - start;
-	int seconds = ((float)ticks) / CLOCKS_PER_SEC;
-	cout << "Assignment complete. In " << seconds << " seconds" << endl;
+	float seconds = ((float)ticks) / CLOCKS_PER_SEC;
+	std::cout << "Assignment complete. In " << seconds << " seconds" << endl;
 }
 
 
